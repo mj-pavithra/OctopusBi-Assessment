@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data View</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        canvas {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Data Visualization</h1>
+    
+    <h2>Number of Students per School</h2>
+    <canvas id="schoolStudentChart"></canvas>
+    <script>
+        var ctx = document.getElementById('schoolStudentChart').getContext('2d');
+        var schoolStudentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for school in school_student_count %}
+                        "{{ school.name }}",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Number of Students',
+                    data: [
+                        {% for school in school_student_count %}
+                            {{ school.num_students }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <h2>Average Student Score per Subject</h2>
+    <canvas id="subjectAvgScoreChart"></canvas>
+    <script>
+        var ctx = document.getElementById('subjectAvgScoreChart').getContext('2d');
+        var subjectAvgScoreChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for subject in subject_avg_score %}
+                        "{{ subject.name }}",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Average Student Score',
+                    data: [
+                        {% for subject in subject_avg_score %}
+                            {{ subject.avg_score }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>
